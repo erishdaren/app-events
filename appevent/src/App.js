@@ -10,7 +10,8 @@ function App () {
       try {
         const request = await fetch('https://jsonplaceholder.typicode.com/photos')
         const data = await request.json()
-        if (data) setPhotos(data)
+        console.log(data[0])
+        if (data) setPhotos(data.slice(0, 99))
       } catch (error) {
         console.log('error message: ', error.message)
       }
@@ -31,6 +32,7 @@ function App () {
             <EventCard
               key={photo.id}
               id={photo.id}
+              albumID={photo.albumId}
               photo={photo.thumbnailUrl}
               title={photo.title}
             />

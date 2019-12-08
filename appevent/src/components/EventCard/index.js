@@ -3,6 +3,7 @@ import React from 'react'
 const EventCard = props => {
   return (
     <div
+      className={`card animated ${props.id % 2 === 0 ? 'fadeInUp' : 'rollIn'}`}
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -35,7 +36,8 @@ const EventCard = props => {
             paddingBottom: 5
           }}
         >
-          #{props.id}
+          #id{props.id} <br />
+          albumID{props.albumID}
         </p>
         <h4
           style={{
@@ -45,13 +47,6 @@ const EventCard = props => {
         >
           {props.title}
         </h4>
-        <p
-          style={{
-            alignSelf: 'flex-start'
-          }}
-        >
-          Poliforum Zammá, Mérida, YUC
-        </p>
       </div>
     </div>
   )
