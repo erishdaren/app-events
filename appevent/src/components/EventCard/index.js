@@ -18,7 +18,8 @@ const EventCard = props => {
           flex: 1
         }}
       >
-        <img src={props.info.thumbnailUrl} alt='placeholder' />
+        <img src={props.photo} alt='placeholder' />
+        <img src={props.photo} alt='placeholder' />
       </div>
       <div
         style={{
@@ -34,7 +35,7 @@ const EventCard = props => {
             paddingBottom: 5
           }}
         >
-          {/* #{props.info.id} */}
+          #{props.id}
         </p>
         <h4
           style={{
@@ -42,7 +43,7 @@ const EventCard = props => {
             paddingBottom: 5
           }}
         >
-          {/* {props.info.title} */}
+          {props.title}
         </h4>
         <p
           style={{
