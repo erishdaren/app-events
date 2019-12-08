@@ -1,64 +1,54 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import SearchField from "react-search-field";
+import EventCard from './components/EventCard'
+import './App.css'
 
-class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-
-    }
-  }
-  token = 'WFW7GL5D3YXHTNOZDN2C&locale'
-
-  getCategories = async () => {
-    await fetch(`https://www.eventbriteapi.com/v3/categories/?token=${this.token}=es_ES`)
-    .then((response) => {
-      console.log('response', response)
-      
-      return response.json()
-    })
-    .then((res) => {
-      this.setState({ categories: res.categories })
-    })
-  }
-  componentDidMount() {
-    this.getCategories()
-  }
-  onChange = (e) => {
+ const onChange = (e) => {
     console.log(e);
-    
   }
-  render () {
-    const { categories } = this.state
-    console.log(categories);
-    
-    return (
-      <div className="App">
-        <SearchField
-          placeholder="Search..."
-          onChange={this.onChange}
-          searchText=""
-          classNames="test-class"
-        />
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+function App () {
+  const [categories, setCategories] = useState(null)
+  useEffect(() => {
+    async function getPhotos () {
+      try {
+        const request = await fetch('https://jsonplaceholder.typicode.com/photos')
+        const data = await request.json()
+        if (data) setCategories(data)
+      } catch (error) {
+        console.log('error message: ', error.message)
+      }
+    }
+    getPhotos()
+  }, [])
+
+ 
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexFlow: 'wrap',
+        justifyContent: 'center'
+      }}
+    >
+      <SearchField
+        placeholder="Search..."
+        onChange={onChange}
+        searchText="This is initial search text"
+        classNames="test-class"
+      />
+      {/* {
+        categories && categories.map(photo => {
+          return (
+            <EventCard
+              info={photo}
+            />
+          )
+        })
+      } */}
+    </div>
+  )
 }
 
-export default App;
+export default App
