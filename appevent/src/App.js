@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import SearchField from "react-search-field";
 
 class App extends Component {
   constructor (props) {
@@ -25,12 +26,22 @@ class App extends Component {
   componentDidMount() {
     this.getCategories()
   }
+  onChange = (e) => {
+    console.log(e);
+    
+  }
   render () {
     const { categories } = this.state
     console.log(categories);
     
     return (
       <div className="App">
+        <SearchField
+          placeholder="Search..."
+          onChange={this.onChange}
+          searchText=""
+          classNames="test-class"
+        />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
