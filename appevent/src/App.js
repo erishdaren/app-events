@@ -8,13 +8,16 @@ import SearchField from "react-search-field";
 
 function App () {
   const [photos, setPhotos] = useState(null)
+  const [emptyData, setEmpty] = useState(false)
+
   // const [photos, filterPhotos] = useState(null)
   useEffect(() => {
     async function getPhotos () {
       try {
         const request = await fetch('https://jsonplaceholder.typicode.com/photos')
         const data = await request.json()
-        if (data) setPhotos(data)
+        console.log(data[0])
+        if (data) setPhotos(data.slice(0, 99))
       } catch (error) {
         console.log('error message: ', error.message)
       }
@@ -23,11 +26,30 @@ function App () {
   }, [])
 
   const onChange = (value, e) => {
-    console.log(value);
-    console.log('photo', photos);
-
-    const filteredData = photos.filter(photo => photo.title === value)
-    setPhotos(filteredData)
+    
+    var filteredData = photos.filter(photo => value && photo.title.includes(value))
+    console.log('value', filteredData);
+    if(!_.isEmpty(filteredData)) {
+      setEmpty(false)
+      setPhotos(filteredData)
+    } else if (value === '') {
+      console.log('>>>>>>>>value', value);
+      fetch('https://jsonplaceholder.typicode.com/photos')
+        .then(res => {
+          
+          
+          return res.json()
+        })
+        .then(data => {
+         
+          if (data) {
+            setEmpty(false)
+            setPhotos(data.slice(0, 99))
+          }
+        })
+    } else {
+      setEmpty(true)
+    }
   }
   return (
     <div
@@ -57,6 +79,9 @@ function App () {
         }}
       >
         {
+          emptyData ?
+          <p>No hay elementos</p>
+          :
           !_.isNull(photos) && photos.map(photo => {
             return (
               <EventCard
@@ -64,6 +89,7 @@ function App () {
                 id={photo.id}
                 photo={photo.thumbnailUrl}
                 title={photo.title}
+                albumID={photo.albumId}
               />
             )
           })
