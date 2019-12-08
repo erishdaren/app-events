@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react'
+import _ from 'lodash'
 import EventCard from './components/EventCard'
 import './App.css'
 
 function App () {
-  const [categories, setCategories] = useState(null)
-  const token = 'WFW7GL5D3YXHTNOZDN2C&locale'
+  const [photos, setPhotos] = useState(null)
   useEffect(() => {
     async function getPhotos () {
       try {
         const request = await fetch('https://jsonplaceholder.typicode.com/photos')
         const data = await request.json()
-        if (data) setCategories(data)
+        if (data) setPhotos(data)
       } catch (error) {
         console.log('error message: ', error.message)
       }
     }
     getPhotos()
   }, [])
-  console.log('categories >>', categories)
   return (
     <div
       style={{
@@ -27,21 +26,17 @@ function App () {
       }}
     >
       {
-        categories && categories.map(photo => {
+        !_.isNull(photos) && photos.map(photo => {
           return (
             <EventCard
-              info={photo}
+              key={photo.id}
+              id={photo.id}
+              photo={photo.thumbnailUrl}
+              title={photo.title}
             />
           )
         })
       }
-      <EventCard />
-      <EventCard />
-      <EventCard />
-      <EventCard />
-      <EventCard />
-      <EventCard />
-      <EventCard />
     </div>
   )
 }
