@@ -18,7 +18,7 @@ const EventCard = props => {
           flex: 1
         }}
       >
-        <img src='https://via.placeholder.com/300x150' alt='placeholder' />
+        <img src={props.info.thumbnailUrl} alt='placeholder' />
       </div>
       <div
         style={{
@@ -34,7 +34,7 @@ const EventCard = props => {
             paddingBottom: 5
           }}
         >
-          mañana a las 9:00
+          {/* #{props.info.id} */}
         </p>
         <h4
           style={{
@@ -42,7 +42,7 @@ const EventCard = props => {
             paddingBottom: 5
           }}
         >
-          Re-valorizate "Encuentro Juvenil Catolico"
+          {/* {props.info.title} */}
         </h4>
         <p
           style={{
